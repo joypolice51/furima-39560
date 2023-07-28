@@ -4,8 +4,14 @@ class CreateDeviseUsers < ActiveRecord::Migration[7.0]
   def self.up
     create_table :users do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
+      t.string :email,              null: false, default: "", unique: true
       t.string :encrypted_password, null: false, default: ""
+      t.string :nickname,           null: false
+      t.string :last_name,          null: false
+      t.string :first_name,         null: false
+      t.string :last_name_kana,     null: false
+      t.string :first_name_kana,    null: false
+      t.date   :date_of_birth,      null: false
 
       ## Recoverable
       t.string   :reset_password_token
@@ -32,12 +38,6 @@ class CreateDeviseUsers < ActiveRecord::Migration[7.0]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.string :nickname,        null: false, default: ""
-      t.string :last_name,       null: false
-      t.string :first_name,      null: false
-      t.string :last_name_kana,  null: false
-      t.string :first_name_kana, null: false
-      t.date   :date_of_birth,   null: false
 
       # Uncomment below if timestamps were not included in your original model.
       t.timestamps null: false
