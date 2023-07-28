@@ -1,8 +1,9 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!  ##ログインしていない場合はログインページに飛ばす
   before_action :set_public_key, only: [:index, :create]
+  before_action :item_find, only: [:index, :create]
   before_action :move_to_root_path, only: [:index]
-  before_action :item_find, only: [:index, :create, move_to_root_path]
+
  ##newアクションは今回は不要
 
   def index
