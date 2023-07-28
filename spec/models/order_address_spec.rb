@@ -19,7 +19,8 @@ RSpec.describe OrderAddress, type: :model do
   context '内容に問題がある場合' do
     it "postal_code, prefecture_id, city, house_number, phone_numberが空では保存ができないこと" do
       @order_address.building = ''
-      expect(@order_address).to be_valid
+      @order_address.valid?
+      expect(@order_address.errors.full_messages).to include("postal_code, prefecture_id, city, house_number, phone_number can't be blank")
     end
 
     it "tokenが空では登録できないこと" do

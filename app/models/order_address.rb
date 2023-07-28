@@ -1,10 +1,7 @@
 class OrderAddress
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number, :order_id
-  attr_accessor :token 
+  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number, :order_id, :token ,:building
   # building属性を追加する
-  attr_accessor :building
-  validates :token, presence: true  
 
   with_options presence: true do
     validates :user_id
@@ -14,6 +11,7 @@ class OrderAddress
     validates :city
     validates :house_number
     validates :phone_number, format: {with: /\A\d{10,11}\z/}
+    validates :token
   end
 
   def save

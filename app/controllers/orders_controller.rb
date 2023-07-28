@@ -2,20 +2,16 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!  ##ログインしていない場合はログインページに飛ばす
   before_action :set_public_key, only: [:index, :create]
   before_action :move_to_root_path, only: [:index]
+  before_action :item_find, only: [:index, :create, move_to_root_path]
  ##newアクションは今回は不要
 
   def index
     @order_address = OrderAddress.new  ## formオブジェクトのインスタンス生成
     @order = Order.new ##ここがおかしい。今から購入するのにallはおかしい。
-    @item = Item.find(params[:item_id]) ##これでOK  写真表示
-      if @item.order.present? || (current_user.id == @item.user_id)
-        redirect_to root_path
-      end
   end
 
   def create ##https://master.tech-camp.in/v2/curriculums/8301 を参照
     @order_address = OrderAddress.new(order_params)
-    @item = Item.find(params[:item_id])           #ここに@itemを定義しないと、render :indexの際に@itemがnilでエラー起きる。
     if @order_address.valid?       #valid?が動くと、モデルに記述したwith_options内のバリデーションが動く。バリデーション内に記述したカラムが@order_addressに入っていないとダメ。
       pay_item
       @order_address.save         #order_addressモデルのsaveメソッドを呼ぶ
@@ -44,9 +40,13 @@ class OrdersController < ApplicationController
   end
 
   def move_to_root_path
-    @item = Item.find(params[:item_id]) 
     if user_signed_in? && current_user.id == @item.user_id
       redirect_to root_path
     end
   end
+
+  def item_find
+    @item = Item.find(params[:item_id])
+  end
+
 end
