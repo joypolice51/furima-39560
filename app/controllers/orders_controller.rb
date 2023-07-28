@@ -40,7 +40,7 @@ class OrdersController < ApplicationController
   end
 
   def move_to_root_path
-    if user_signed_in? && current_user.id == @item.user_id
+    if user_signed_in? && current_user.id == @item.user_id || @item_order.present?
       redirect_to root_path
     end
   end
