@@ -91,7 +91,7 @@ gem 'payjp'
 gem 'gon'
 
 group :production do
-  #gem 'pg'
+  gem 'pg'
   gem 'unicorn', '6.1.0'
 end
 
